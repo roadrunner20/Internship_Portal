@@ -9,171 +9,266 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<title>Welcome !</title>
+  
+<title>Student Page</title>
 <link rel="stylesheet" href="styles.css" type="text/css">
-<style>
-table {
-    border-collapse: collapse;
-}
 
-td {
-    padding-top: .5em;
-    padding-bottom: .5em;
-}
-</style>
-<script type="text/javascript"> 
-       function validator()
-       {
-    	  
-    	  var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-    	 //var result = document.getElementbyID("contactnumber");
-    	var result1 = document.StudentDataForm.contactNumber.value.match(phoneno);
-    	//var result1= result.value.match(phoneno);
-    	//var phone = document.StudentDatForm.
-    	  
-    	//  var email = (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(myForm.emailAddr.value));
-    	 // var result2 = document.StudentDataForm.emailID.value.match(email);
-    	  
-    	  if (result1 == null)
-    	  {
-    		  
-    		  document.StudentDataForm.contactNumber.focus();
-    		 // document.StudentDataForm.emailID.focus();
-    		 // document.StudentDataForm.action = "StudentDB.jsp";
-    		 // document.StudentDataForm.method = "POST";
-    		 // document.StudentDataForm.submit();
-    		 alert("Invalid Entry. Please try again.");
-    		 
-    		  
-    		  
-    	  }
-    	  else
-    	{
-    		 // alert ("Not valid");
-    		  // result.focus();
-    		 document.StudentDataForm.action = "StudentDB.jsp";
-    		 document.StudentDataForm.method = "POST";
-    		 document.StudentDataForm.submit();
-    		
-    	}
-    	  
-    		 
-       }
-       
-       
-       
-       </script>
-       
- 
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  
+	  <script>
+	  $(document).ready(function() {
+	    $("#dateCert").datepicker();
+	  });
+	  </script>
+	   <script>
+	  $(document).ready(function() {
+	    $("#dateEdu1").datepicker();
+	  });
+	  </script>
+	   <script>
+	  $(document).ready(function() {
+	    $("#dateEdu2").datepicker();
+	  });
+	  </script>
+		
+
+	<style>
+	
+	fieldset.fieldCert {
+	width: relative;
+	border: 1px solid #dcdcdc;
+	border-radius: 10px;
+	padding: 2px;
+	text-align: center;
+	float: left;
+	margin-top: 50px
+	}
+	
+	legend.cert {
+	background-color: #efefef;
+	border: 1px solid #00000;
+	border-radius: 10px;
+	padding: 5px;
+	text-align: center;
+	width: 150px;
+	font-size: 15px;
+	}
+	
+	fieldset.addCert {
+	width: 420px;
+	border: 1px solid #efefef;
+	border-radius: 10px;
+	padding: 5px;
+	text-align: left;
+	margin-top: 50px;
+	}
+	
+	legend.lAddCert {
+	background-color: #efefef;
+	border: 1px solid #00000;
+	border-radius: 10px;
+	padding: 5px;
+	text-align:center;
+	width: 150px;
+	font-size: 15px;
+	
+	}
+	
+	div.field {
+	border-bottom: 1px solid #efefef;
+	margin: 5px;
+	padding-bottom: 10px;
+	
+	width: 500px;
+	}
+	
+	.title {
+	float: left;
+	width: 180px;
+	text-align: right;
+	padding-right: 10px;
+	}
+	
+	.submitCert {
+	float: right;
+	margin-right: 60px;
+	}
+	
+	
+	#divAddCert{
+	margin-left: 0px;
+	margin-right:190px;
+	width: 400px;
+	float: right;
+	}
+	
+	
+	#divEdu{
+	margin-left: 80px;
+	margin-right:0px;
+	margin-bottom: 20px;
+	width: 400px;
+	float: left;
+	}
+	
+	div.logout{
+	margin-right:90px;
+	font-size: 1.25em;
+	float:right;
+	}
+	
+	div.head{
+	margin-bottom: 20px;
+	}
+	
+	.colorMe{
+		margin-top:-18px;
+		background-color:#efefef;
+	}
+	
+	</style>
+
 </head>
+
 <body>
-<div align="center">
-<div id="header">
-<h1 class="ex2"> UNIVERSITY OF WINDSOR</h1>
-</div>
+<%@ page import = "java.sql.*" %>
 
-<h2 class="ex2"> INTERNSHIP PORTAL</h2>
-<font face="Georgia" size="4"> Creating Students' Profiles</font>
+<%
+ 
+ 	String uid = (String)session.getAttribute("userid");
+ 	//String uid="123";
+ 	System.out.println("certi"+uid);
+ 
+  		try{
+		 Class.forName("com.mysql.jdbc.Driver");
+  		}
+  		catch(Exception ex){
+  			System.out.println("Unable to load driver");
+  		}
+  		
+  	  Statement stmt;
+  	  Connection conn=null;
+  	  
+      conn = DriverManager.getConnection(
+          "jdbc:mysql://localhost:3306/test_one", "root", "changemaker0123"); // <== Check!
+    
+         // System.out.println("Connected...");
+         // System.out.println("Session for "+uid);
+      
+      String query = "select certi_title as title,"+
+      				 "certi_body as body,"+
+      				 "date_awarded as date"+
+    		  		 " from certi_details"+
+      				 " where student_id="+uid;
+        		  
+      stmt = conn.createStatement();
+      ResultSet rs = stmt.executeQuery(query);
+     // System.out.println(query);
+      
+%>
 
-<br>
+<div class="colorMe">
 
-<div align="right" class="logout">
-		        <a href="studentPageLogOut.jsp" >
+	<div class="head" align="center">
+			<div id="header">
+				<h1 class="ex2">INTERNSHIP PORTAL</h1>
+			</div>
+			
+			<font face="Georgia" size="4">Student Profile</font>
+	</div>	
+		
+			<div align="right" class="logout">
+		        <a href="studentPageLogOut.jsp">
 		          <span class="glyphicon glyphicon-log-out"></span><b>Log out</b>
 		        </a>
 	       </div> 
-
-
-<ul class="nav nav-tabs">
-
-  <li class="active"><a data-toggle="tab" href="createStudentProfile.jsp">Basic Info.</a></li>
-<!--    <li><a href="studentEducationDetails.jsp">Educational Details</a></li>
-  <li><a href="studentCertificationDetails.jsp">Certification Details</a></li>
-  <li><a href="studentCertificationDetails.jsp">Work Experience</a></li>
-   <li><a href="studentSkillSet.jsp">Competency Level</a></li>
-     -->
-     <li><a href="admin.jsp">Home</a></li>
-</ul>
+			
+	<div align="center">
+				<ul class="nav nav-tabs">
+				  
+				  <li><a href="studentPage.jsp"><b>Basic Info.</b></a></li>  
+				  <li class="active"><a data-toggle="tab" href=""><b>Certification || Degree Details</b></a></li>
+				  <li><a href="studentPageCompInsert.jsp"><b>Skill Competency</b></a></li>
+				  <li><a href="studentPageWorkExp.jsp"><b>Work Xperience</b></a></li>
+				  <li><a href="studentPageJob.jsp"><b>Available Jobs</b></a></li>
+				  <li><a href="studentPageViewNotif.jsp"><b>Notifications</b></a></li>
+				  
+				</ul>
+		</div>
 
 </div>
-<div class="container">
+	
+<div id="killerDiv" >	
 
-<div align="center">
+	<div align ="right" id="divAddCert">	
+		<fieldset class="addCert">
+		<legend class="lAddCert">Add Certification</legend>
+		
+		<form action="studentPageCertplusDeg.jsp" method="post" >
 
+			<div class="field">
+				<label class="title">Certification Title:</label> 
+				<input type="text" name="title" size="28" />
+			</div>
+			<div class="field">
+				<label class="title">Certification Body:</label>
+				<input type="text" name="body"  size="28" />
+			</div>
+			<div class="field">
+				<label class="title">Date Awarded:</label>
+				<input type="text" name="date"  size=10  id="dateCert" />
+			</div>
+			
+			<div class="submitCert">
+				<button type="submit" class="btn btn-info" name="submit">Submit</button>
+			</div>
+		</form>
+	</fieldset>
+	</div>
+	
+	
+	
+	
 
-       
-        <!--   <input type="text" name="search" value="Search by Student ID" size="50" />   -->
-        <form name="StudentDataForm" action="" onsubmit="return validator();">
-            <table border="0" >
-     
-                <tbody>
-                    <tr>
-                        <td>Student ID * :</td>
-                        <td><input type="text" name="studentID" value="" size="50" /></td>
-                    </tr>
-                    
-                    <tr>
-                        <td>First Name *:</td>
-                        <td><input type="text" name="firstName" value="" size="50" /></td>
-                    </tr>
-                    <tr>
-                        <td>Middle Name :</td>
-                        <td><input type="text" name="middleName" value="" size="50" /></td>
-                    </tr>
-                    <tr>
-                        <td>Last Name *:</td>
-                        <td><input type="text" name="lastName" value="" size="50" /></td>
-                    </tr>
-                    <tr>
-                        <td>Email ID *: <br> (xx.x@gmail.com, xx@comcast.net)</td>
-                        <td><input type="text" name="emailID" value="@uwindsor.ca" size="50" /><td>
-                    </tr>
-                    <tr>
-                        <td>Contact Number *: <br> (xxx-xxx-xxxx, xxx.xxx.xxxx, xxx xxx xxxx)</td>
-                        <td><input type="text" name="contactNumber" value="" size="50" /></td>
-                    </tr>
-                    <tr>
-                        <td>Semester *:</td>
-                        <td><select name="semester">
-                            <option>Fall</option>
-                            <option>Winter</option>
-                            <option>Spring</option></td>
-                    </tr>
-                    <tr>
-                        <td>Year * :</td>
-                        <td><select name="year">
-                            <option>2016</option>
-                            <option>2015</option>
-                            <option>2014</option>
-                            <option>2013</option>
-                            <option>2012</option>
-                            <option>2011</option>
-                            <option>2010</option>
-                            <option>2009</option>
-                            <option>2008</option>
-                            <option>2007</option>
-                        </select></td><td>
-                    </tr>
-                    <tr>
-                    <td> Gender *:</td>
-                    <td>
-                    <input checked type="radio" name="Gender" value="Male" />Male
-                    <input type="radio" name="Gender" value="Female" />Female
-           
-                    </td>
-                    </tr>
-                    <tr>
-                    <td> Status *:</td>
-                    <td>
-                    <input type="radio" name="status" value="International" />International
-                    <input type="radio" name="status" value="Permanent Resident/Citizen" />Permanent Resident/Citizen
-         
-                    </td>
-                    </tr>
-                    <tr>
-                        <td>Country *:</td>
-                        <td>
-                        <select name="location">
+	<div align ="left" id="divEdu">	
+		<fieldset class="addCert">
+		<legend class="lAddCert">Education</legend>
+		
+		<form action="studentPageCertplusDeg.jsp" method="post" >
+		
+			<div class="field">
+				<label class="title">Degree Type:</label>
+				<select name="degType" >
+					  <option value="1">Undergraduate</option>
+					  <option value="2">Graduate</option>
+				</select>
+			</div>
+			<div class="field">
+				<label class="title">University Name</label> 
+			
+				<select name="name">
+						      <option value=""></option> 
+						      <option value="University of Windsor">University of Windsor</option> 
+						        <option value="University of Waterloo">University of Waterloo</option>
+						         <option value="University of Toronto">University of Toronto</option> 
+						      
+				</select>
+			</div>
+			
+			<div class="field">
+				<label class="title">Major:</label> 
+				<input type="text" name="major" size="28" />
+			</div>
+			<div class="field">
+				<label class="title">GPA:</label>
+				<input type="text" name="gpa"  size="10" />
+			</div>
+			<div class="field">
+				<label class="title">University Location:</label> 
+				
+				<select name="location">
 						      <option value=""></option> 
 						      <option value="Afghanistan">Afghanistan</option> 
 						      <option value="Albania">Albania</option> 
@@ -419,35 +514,110 @@ td {
 				 </select>
 				
 				
-                        
-                        </td>
-                    </tr>
-                    
-                </tbody>
-            </table>
-           
-                     
-  
-           
-       
-       <br> <br>
-           <!--  <button type="reset" class="btn btn-info" name="Reset">Clear</button>  -->
-            <button type = "submit" class="btn btn-info" name="submit"  >Submit</button>
-          <!--  <a href= "createStudentProfile.jsp" class="btn btn-info" name="new">Create Next Account</a>  --> 
-            
-             
-        
-        
-        </form>
-       
-      
-        
-
-</div>
-</div>
-</div>
+			</div>
+			<div class="field">
+				<label class="title">Start Date:</label>
+				<input type="text" name="startDate" size=10 id="dateEdu1"/>
+			</div>
+			<div class="field">
+				<label class="title">End Date:</label>
+				<input type="text" name="endDate"  size=10 id="dateEdu2"/>
+			</div>
+			
+			<div class="submitCert">
+				<button type="submit" class="btn btn-info" name="submit">Submit</button>
+			</div>
+		</form>
+	</fieldset>
+	</div>
 
 
+</div>	
+	
+	<%
+		String title = request.getParameter("title");
+		String body = request.getParameter("body");  
+	    String date = request.getParameter("date");
+	
+	if( title!=null && body!=null && date!=null)
+	{
+	    Class.forName("com.mysql.jdbc.Driver");
+			 
+	    conn = DriverManager.getConnection(
+	          "jdbc:mysql://localhost:3306/test_one", "root", "changemaker0123"); // <== Check!
+	    
+	  //  System.out.println("Connected...");
+	          
+	    title = request.getParameter("title");
+		body = request.getParameter("body");  
+	    date = request.getParameter("date");
+	    
+	    PreparedStatement ps;
+		String sqlQ1 = "INSERT INTO certi_details (student_id,certi_title,certi_body,date_awarded) "+ 
+					   "VALUES(?,?,?,?)";
+		
+	    ps = conn.prepareStatement(sqlQ1);
+	    ps.setString(1, uid);
+		ps.setString(2, title);
+		ps.setString(3, body);
+		ps.setString(4, date);
+		
+		ps.executeUpdate();
+		
+		ps.close();
+		conn.close();
+	}
+	
+	%>
+	
+	
+	
+		
+	  <%
+		String major = request.getParameter("major");
+		String name = request.getParameter("name");  
+	    String gpa = request.getParameter("gpa");
+	    String location = request.getParameter("location");
+	    String startDate = request.getParameter("startDate");
+	    String endDate = request.getParameter("endDate");
+	    String selectValue=request.getParameter("degType");
+	
+	if( major!=null && name!=null && gpa!=null && location!=null && startDate!=null && endDate!=null)
+	{
+	    Class.forName("com.mysql.jdbc.Driver");
+			 
+	    conn = DriverManager.getConnection(
+	          "jdbc:mysql://localhost:3306/test_one", "root", "changemaker0123"); // <== Check!
+	    
+	    //System.out.println("Connected...");
+	          
+	    //major = request.getParameter("major");
+		//name = request.getParameter("name");  
+	   // gpa = request.getParameter("gpa");
+	   // location = request.getParameter("location");
+	   // startDate = request.getParameter("startDate");
+	   // endDate = request.getParameter("endDate");
+	   
+	    PreparedStatement ps;
+		String sqlQ = "INSERT INTO degree_details (student_id,degree_id,start_date,end_date,major,GPA,uni_name,uni_location) "+ 
+					  "VALUES(?,?,?,?,?,?,?,?)";
+		
+	    ps = conn.prepareStatement(sqlQ);
+	    ps.setString(1, uid);
+		ps.setInt(2,Integer.parseInt(selectValue));
+		ps.setString(3, startDate);
+		ps.setString(4, endDate);
+		ps.setString(5, major);
+		ps.setString(6, gpa);
+		ps.setString(7, name);
+		ps.setString(8, location);
+		
+		ps.executeUpdate();
+		
+		ps.close();
+		conn.close();
+	}	
+	%>
 
 
 </body>

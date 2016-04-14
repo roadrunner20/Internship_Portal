@@ -1,5 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.sql.*"%>
+ 
+<%!
+public Connection cOpen() throws SQLException {
+	Connection con = null;
+	try {
+		DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test_one", "root", "changemaker0123");
+	} catch (Exception e) {
+		e.printStackTrace(System.out);
+	}
+	return con;
+}%>
+
+
+
+<%
+Connection con = null;
+PreparedStatement stmt = null;
+ResultSet rs = null;
+String SQL = "";
+%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,160 +43,65 @@ td {
     padding-bottom: .5em;
 }
 </style>
-<script type="text/javascript"> 
-       function validator()
-       {
-    	  
-    	  var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-    	 //var result = document.getElementbyID("contactnumber");
-    	var result1 = document.StudentDataForm.contactNumber.value.match(phoneno);
-    	//var result1= result.value.match(phoneno);
-    	//var phone = document.StudentDatForm.
-    	  
-    	//  var email = (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(myForm.emailAddr.value));
-    	 // var result2 = document.StudentDataForm.emailID.value.match(email);
-    	  
-    	  if (result1 == null)
-    	  {
-    		  
-    		  document.StudentDataForm.contactNumber.focus();
-    		 // document.StudentDataForm.emailID.focus();
-    		 // document.StudentDataForm.action = "StudentDB.jsp";
-    		 // document.StudentDataForm.method = "POST";
-    		 // document.StudentDataForm.submit();
-    		 alert("Invalid Entry. Please try again.");
-    		 
-    		  
-    		  
-    	  }
-    	  else
-    	{
-    		 // alert ("Not valid");
-    		  // result.focus();
-    		 document.StudentDataForm.action = "StudentDB.jsp";
-    		 document.StudentDataForm.method = "POST";
-    		 document.StudentDataForm.submit();
-    		
-    	}
-    	  
-    		 
-       }
-       
-       
-       
-       </script>
-       
- 
+
+
+
+
+
 </head>
 <body>
+
 <div align="center">
 <div id="header">
 <h1 class="ex2"> UNIVERSITY OF WINDSOR</h1>
 </div>
 
 <h2 class="ex2"> INTERNSHIP PORTAL</h2>
-<font face="Georgia" size="4"> Creating Students' Profiles</font>
+<font face="Georgia" size="4"> Seek, And Ye Shall Find !</font>
 
-<br>
+<ul class="nav nav-tabs">
 
+
+    <li><a href="admin.jsp">Home</a></li>
+</ul>
+<br><br>
+
+
+</div>
+<br> <br>
+<div align="center">
+<div class="container">
+<br> <br>
 <div align="right" class="logout">
 		        <a href="studentPageLogOut.jsp" >
 		          <span class="glyphicon glyphicon-log-out"></span><b>Log out</b>
 		        </a>
 	       </div> 
 
+ 
 
-<ul class="nav nav-tabs">
-
-  <li class="active"><a data-toggle="tab" href="createStudentProfile.jsp">Basic Info.</a></li>
-<!--    <li><a href="studentEducationDetails.jsp">Educational Details</a></li>
-  <li><a href="studentCertificationDetails.jsp">Certification Details</a></li>
-  <li><a href="studentCertificationDetails.jsp">Work Experience</a></li>
-   <li><a href="studentSkillSet.jsp">Competency Level</a></li>
-     -->
-     <li><a href="admin.jsp">Home</a></li>
-</ul>
-
-</div>
-<div class="container">
-
-<div align="center">
-
-
-       
-        <!--   <input type="text" name="search" value="Search by Student ID" size="50" />   -->
-        <form name="StudentDataForm" action="" onsubmit="return validator();">
-            <table border="0" >
+ 
+        <form name="" action="reportQ.jsp" method="POST">
+            <table border="0">
      
                 <tbody>
+                <tr>
+                <td> Students :</td>
+            <td>    <select name="allList">
+                        
+                     
+                            <option>All Students</option>
+                            
+                           </select> </td> 
+                </tr>
+                
                     <tr>
-                        <td>Student ID * :</td>
-                        <td><input type="text" name="studentID" value="" size="50" /></td>
-                    </tr>
-                    
-                    <tr>
-                        <td>First Name *:</td>
-                        <td><input type="text" name="firstName" value="" size="50" /></td>
-                    </tr>
-                    <tr>
-                        <td>Middle Name :</td>
-                        <td><input type="text" name="middleName" value="" size="50" /></td>
-                    </tr>
-                    <tr>
-                        <td>Last Name *:</td>
-                        <td><input type="text" name="lastName" value="" size="50" /></td>
-                    </tr>
-                    <tr>
-                        <td>Email ID *: <br> (xx.x@gmail.com, xx@comcast.net)</td>
-                        <td><input type="text" name="emailID" value="@uwindsor.ca" size="50" /><td>
-                    </tr>
-                    <tr>
-                        <td>Contact Number *: <br> (xxx-xxx-xxxx, xxx.xxx.xxxx, xxx xxx xxxx)</td>
-                        <td><input type="text" name="contactNumber" value="" size="50" /></td>
-                    </tr>
-                    <tr>
-                        <td>Semester *:</td>
-                        <td><select name="semester">
-                            <option>Fall</option>
-                            <option>Winter</option>
-                            <option>Spring</option></td>
-                    </tr>
-                    <tr>
-                        <td>Year * :</td>
-                        <td><select name="year">
-                            <option>2016</option>
-                            <option>2015</option>
-                            <option>2014</option>
-                            <option>2013</option>
-                            <option>2012</option>
-                            <option>2011</option>
-                            <option>2010</option>
-                            <option>2009</option>
-                            <option>2008</option>
-                            <option>2007</option>
-                        </select></td><td>
-                    </tr>
-                    <tr>
-                    <td> Gender *:</td>
-                    <td>
-                    <input checked type="radio" name="Gender" value="Male" />Male
-                    <input type="radio" name="Gender" value="Female" />Female
-           
-                    </td>
-                    </tr>
-                    <tr>
-                    <td> Status *:</td>
-                    <td>
-                    <input type="radio" name="status" value="International" />International
-                    <input type="radio" name="status" value="Permanent Resident/Citizen" />Permanent Resident/Citizen
-         
-                    </td>
-                    </tr>
-                    <tr>
-                        <td>Country *:</td>
+                        <td> Country :</td>
+                                   
+                       
                         <td>
-                        <select name="location">
-						      <option value=""></option> 
+                        <select name="countryList">
+						      <option value="">Choose</option> 
 						      <option value="Afghanistan">Afghanistan</option> 
 						      <option value="Albania">Albania</option> 
 						      <option value="Algeria">Algeria</option> 
@@ -417,38 +344,158 @@ td {
 						      <option value="Zambia">Zambia</option> 
 						      <option value="Zimbabwe">Zimbabwe</option>
 				 </select>
-				
-				
+                     
+             <%
+	try {
+		con = cOpen();
+		SQL = "SELECT degree_type FROM degree";
+		
+		stmt = con.prepareStatement(SQL);
+		//stmt.setInt(1, 25);
+		rs = stmt.executeQuery();
+		
+		//String	ss= rs.getString("degree_type");
+		//String ssvalue = rs.getString("degree_id");
+		int i = 0;
+		i++;
+		//out.print(i);
+		%>                 
                         
-                        </td>
+                       
+                       
+                             
+                       
+                   
+                   
+    
+	<% 
+	} catch (SQLException e) {
+		e.printStackTrace(System.out);
+	} finally {
+		try {stmt.close();} catch (Exception e) {
+		}
+		try {rs.close();} catch (Exception e) {
+		}
+		try {
+			if (null != con) {con.close();}
+		} catch (SQLException ex) {
+			ex.printStackTrace(System.out);
+		}
+	}
+	%>
+ 
+ 
+ 
+                 
+
+                    <tr>
+                        <td>Job Status </td>
+                        <td><select name="jobStatus">
+                         <option>Choose</option>
+                     
+                            <option>Available</option>
+                            <option>Paid</option>
+                            <option>Unpaid</option></td>
                     </tr>
+                    
+                    
+                   <tr>
+                        <td>Semester :</td>
+                        <td ><select name="semester">
+                         <option>Choose</option>
+                            <option>Fall</option>
+                            <option>Winter</option>
+                            <option>Spring</option></select></td>
+                          <td>Year :</td>  
+                        <td><select name="year">
+                        <option>Choose</option>
+                            <option>2016</option>
+                            <option>2015</option>
+                            <option>2014</option>
+                            <option>2013</option>
+                            <option>2012</option>
+                            <option>2011</option>
+                            <option>2010</option>
+                            <option>2009</option>
+                            <option>2008</option>
+                            <option>2007</option>
+                        </select></td>
+                    </tr>
+ <tr>
+                       
+                          <td>GPA > :</td>  
+                        <td><select name="GPA">
+                        <option>Choose</option>
+                            <option>0</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>Hired By Specific Employer:</td>
+                        
+                                             
+             <%
+	try {
+		con = cOpen();
+		SQL = "SELECT company_name FROM internship_posting";
+		stmt = con.prepareStatement(SQL);
+		//stmt.setInt(1, 25);
+		rs = stmt.executeQuery();
+		%>                 
+             
+                        <td>  <select name="companyName">
+                        <option>Choose</option>
+                      <%  while (rs.next()) { %>
+                            <option><% out.print(rs.getString("company_name")); %></option>
+                    
+		                                  <%}%>
+		
+		               </select></td> </tr>
+	<% 
+	} catch (SQLException e) {
+		e.printStackTrace(System.out);
+	} finally {
+		try {stmt.close();} catch (Exception e) {
+		}
+		try {rs.close();} catch (Exception e) {
+		}
+		try {
+			if (null != con) {con.close();}
+		} catch (SQLException ex) {
+			ex.printStackTrace(System.out);
+		}
+	}
+	%>
+                    
                     
                 </tbody>
             </table>
-           
-                     
-  
+
            
        
-       <br> <br>
-           <!--  <button type="reset" class="btn btn-info" name="Reset">Clear</button>  -->
-            <button type = "submit" class="btn btn-info" name="submit"  >Submit</button>
-          <!--  <a href= "createStudentProfile.jsp" class="btn btn-info" name="new">Create Next Account</a>  --> 
-            
-             
+            <input type="submit"  class="btn btn-info" value="Generate Report" name="submit" />
+           <a href= "report.jsp" class="btn btn-info" name="new">Reset</a>
         
         
         </form>
-       
-      
-        
-
-</div>
-</div>
-</div>
+ <script>
 
 
+function Autotext()
+{
+	//var mytextbox = document.getElementById("mytext");
+	var mydropdown = document.getElementById("degreeID").value;
 
-
-</body>
+	//if(mydropdown == 2)
+	//mytextbox.innerHTML = "Graduate"
+	//mytextbox.value = "Graduate";
+	document.getElementById("mytext").innerHTML = "Undergraduate" + mydropdown;
+	
+}
+</script>
+    </body>
 </html>

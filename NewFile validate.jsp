@@ -47,7 +47,7 @@
 		//out.println("Connection with database made successfully");
 		//ResultSet rs;
 		//rs = st.executeQuery("Select username, password from user where username='" + username + "' and password='" + password + "'");
-		String str = "SELECT username, password, status FROM user WHERE username = ? and password = ?" ;
+		String str = "SELECT userid, password, usertype FROM user_account WHERE userid = ? and password = ?" ;
 		PreparedStatement ps = con.prepareStatement(str);
 		ps.setString(1, username);
 		ps.setString(2, password);
@@ -55,9 +55,9 @@
 		if(rs.next())
 		{	 
 			//session.setSttribute("username", username);
-		userdbName = rs.getString("username");
+		userdbName = rs.getString("userid");
 		userdbPsw = rs.getString("password");
-		userdbStatus = rs.getString("status");
+		userdbStatus = rs.getString("usertype");
 		
 		if(status.equals("Admin"))
 		{
@@ -70,7 +70,7 @@
 			{
 				session.setAttribute("getAlert", "Error");
 				
-				response.sendRedirect("error.jsp"); 	
+				response.sendRedirect("validation.jsp"); 	
 			}
 		}
 		else if(status.equals("Student") )
@@ -78,13 +78,14 @@
 			if(username.equals(userdbName) && password.equals(userdbPsw)&& userdbStatus.equals("S"))
 			{
 			name = username.toUpperCase();
-			response.sendRedirect("Student.jsp?username="+name);
+			response.sendRedirect("studentPage.jsp");
+			session.setAttribute("userid",userdbName );
 			}
 			else
 			{
 				session.setAttribute("getAlert", "Error");
 				
-				response.sendRedirect("error.jsp"); 	
+				response.sendRedirect("validation.jsp"); 	
 			}
 		}
 		}	
@@ -105,7 +106,7 @@
 					
 			session.setAttribute("getAlert", "Error");
 					
-		response.sendRedirect("error.jsp"); 
+		response.sendRedirect("validation.jsp"); 
 				
        // out.print(message);
 		}

@@ -9,9 +9,29 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<title>Welcome !</title>
+  
+<title>Student Page</title>
 <link rel="stylesheet" href="styles.css" type="text/css">
+
+
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  
+	  <script>
+	  $(document).ready(function() {
+	    $("#date1").datepicker();
+	  });
+	  </script>
+	  
+	  <script>
+	  $(document).ready(function() {
+	    $("#date2").datepicker();
+	  });
+	  </script>
+
 <style>
+
 table {
     border-collapse: collapse;
 }
@@ -20,160 +40,143 @@ td {
     padding-top: .5em;
     padding-bottom: .5em;
 }
+
+fieldset.addCert {
+	width: 420px;
+	border: 1px solid #efefef;
+	border-radius: 10px;
+	padding: 5px;
+	text-align: left;
+	margin-top: 50px;
+	}
+	
+	legend.lAddCert {
+	background-color: #efefef;
+	border: 1px solid #00000;
+	border-radius: 10px;
+	padding: 5px;
+	text-align:center;
+	width: 150px;
+	font-size: 15px;
+	
+	}
+	
+	div.field {
+	border-bottom: 1px solid #efefef;
+	margin: 5px;
+	padding-bottom: 10px;
+	
+	width: 500px;
+	}
+	
+	.title {
+	float: left;
+	width: 180px;
+	text-align: right;
+	padding-right: 10px;
+	}
+	
+	.submitCert {
+	float: right;
+	margin-right: 60px;
+	}
+
+
+#divEdu{
+	margin-left: 100px;
+	margin-right:10px;
+	margin-bottom: 20px;
+	}
+
+div.compField{
+	margin-top:100px;
+}
+div.logout{
+	margin-right:90px;
+	font-size: 1.25em;
+	float:right;
+  
+}
+div.head{
+	margin-bottom: 20px;
+}
+
+.colorMe{
+		margin-top:-18px;
+		background-color:#efefef;
+	}
+
 </style>
-<script type="text/javascript"> 
-       function validator()
-       {
-    	  
-    	  var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-    	 //var result = document.getElementbyID("contactnumber");
-    	var result1 = document.StudentDataForm.contactNumber.value.match(phoneno);
-    	//var result1= result.value.match(phoneno);
-    	//var phone = document.StudentDatForm.
-    	  
-    	//  var email = (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(myForm.emailAddr.value));
-    	 // var result2 = document.StudentDataForm.emailID.value.match(email);
-    	  
-    	  if (result1 == null)
-    	  {
-    		  
-    		  document.StudentDataForm.contactNumber.focus();
-    		 // document.StudentDataForm.emailID.focus();
-    		 // document.StudentDataForm.action = "StudentDB.jsp";
-    		 // document.StudentDataForm.method = "POST";
-    		 // document.StudentDataForm.submit();
-    		 alert("Invalid Entry. Please try again.");
-    		 
-    		  
-    		  
-    	  }
-    	  else
-    	{
-    		 // alert ("Not valid");
-    		  // result.focus();
-    		 document.StudentDataForm.action = "StudentDB.jsp";
-    		 document.StudentDataForm.method = "POST";
-    		 document.StudentDataForm.submit();
-    		
-    	}
-    	  
-    		 
-       }
-       
-       
-       
-       </script>
-       
- 
+
+
 </head>
-<body>
-<div align="center">
-<div id="header">
-<h1 class="ex2"> UNIVERSITY OF WINDSOR</h1>
-</div>
 
-<h2 class="ex2"> INTERNSHIP PORTAL</h2>
-<font face="Georgia" size="4"> Creating Students' Profiles</font>
+<body >
 
-<br>
+<%@ page import = "java.sql.*" %>
 
-<div align="right" class="logout">
+
+<%
+ 
+ 	String uid = (String)session.getAttribute("userid");
+ 	//String uid="123";
+%>
+
+<div class="colorMe">
+			
+	<div class="head" align="center">
+			<div id="header">
+				<h1 class="ex2">INTERNSHIP PORTAL</h1>
+			</div>
+			
+			<font face="Georgia" size="4">Student Profile</font>
+	</div>	
+		
+			<div align="right" class="logout">
 		        <a href="studentPageLogOut.jsp" >
 		          <span class="glyphicon glyphicon-log-out"></span><b>Log out</b>
 		        </a>
 	       </div> 
-
-
-<ul class="nav nav-tabs">
-
-  <li class="active"><a data-toggle="tab" href="createStudentProfile.jsp">Basic Info.</a></li>
-<!--    <li><a href="studentEducationDetails.jsp">Educational Details</a></li>
-  <li><a href="studentCertificationDetails.jsp">Certification Details</a></li>
-  <li><a href="studentCertificationDetails.jsp">Work Experience</a></li>
-   <li><a href="studentSkillSet.jsp">Competency Level</a></li>
-     -->
-     <li><a href="admin.jsp">Home</a></li>
-</ul>
-
+	        
+	<div align="center">
+			<ul id="navt" class="nav nav-tabs">
+			    
+			    	  <li><a href="studentPage.jsp"><b>Basic Info.</b></a></li>  
+					  <li><a href="studentPageCertplusDeg.jsp"><b>Certification || Degree Details</b></a></li>
+					  <li><a href="studentPageCompInsert.jsp"><b>Skill Competency</b></a></li>
+					  <li class="active"><a data-toggle="tab" href=""><b>Work Xperience</b></a></li>
+					  <li><a href="studentPageJob.jsp"><b>Available Jobs</b></a></li>
+					  <li><a href="studentPageViewNotif.jsp"><b>Notifications</b></a></li>
+			    
+			</ul>
+	</div>
 </div>
-<div class="container">
 
-<div align="center">
+  
+      		
+<%@ page import = "java.sql.*" %>
+
+<% 		 
+	//String uid = (String)session.getAttribute("userid");     		  
+%>
 
 
-       
-        <!--   <input type="text" name="search" value="Search by Student ID" size="50" />   -->
-        <form name="StudentDataForm" action="" onsubmit="return validator();">
-            <table border="0" >
-     
-                <tbody>
-                    <tr>
-                        <td>Student ID * :</td>
-                        <td><input type="text" name="studentID" value="" size="50" /></td>
-                    </tr>
-                    
-                    <tr>
-                        <td>First Name *:</td>
-                        <td><input type="text" name="firstName" value="" size="50" /></td>
-                    </tr>
-                    <tr>
-                        <td>Middle Name :</td>
-                        <td><input type="text" name="middleName" value="" size="50" /></td>
-                    </tr>
-                    <tr>
-                        <td>Last Name *:</td>
-                        <td><input type="text" name="lastName" value="" size="50" /></td>
-                    </tr>
-                    <tr>
-                        <td>Email ID *: <br> (xx.x@gmail.com, xx@comcast.net)</td>
-                        <td><input type="text" name="emailID" value="@uwindsor.ca" size="50" /><td>
-                    </tr>
-                    <tr>
-                        <td>Contact Number *: <br> (xxx-xxx-xxxx, xxx.xxx.xxxx, xxx xxx xxxx)</td>
-                        <td><input type="text" name="contactNumber" value="" size="50" /></td>
-                    </tr>
-                    <tr>
-                        <td>Semester *:</td>
-                        <td><select name="semester">
-                            <option>Fall</option>
-                            <option>Winter</option>
-                            <option>Spring</option></td>
-                    </tr>
-                    <tr>
-                        <td>Year * :</td>
-                        <td><select name="year">
-                            <option>2016</option>
-                            <option>2015</option>
-                            <option>2014</option>
-                            <option>2013</option>
-                            <option>2012</option>
-                            <option>2011</option>
-                            <option>2010</option>
-                            <option>2009</option>
-                            <option>2008</option>
-                            <option>2007</option>
-                        </select></td><td>
-                    </tr>
-                    <tr>
-                    <td> Gender *:</td>
-                    <td>
-                    <input checked type="radio" name="Gender" value="Male" />Male
-                    <input type="radio" name="Gender" value="Female" />Female
-           
-                    </td>
-                    </tr>
-                    <tr>
-                    <td> Status *:</td>
-                    <td>
-                    <input type="radio" name="status" value="International" />International
-                    <input type="radio" name="status" value="Permanent Resident/Citizen" />Permanent Resident/Citizen
-         
-                    </td>
-                    </tr>
-                    <tr>
-                        <td>Country *:</td>
-                        <td>
-                        <select name="location">
+   	
+ 	<div class="compField" align ="center" id="divEdu">	
+		<fieldset class="addCert">
+		<legend class="lAddCert">Work Experience</legend>
+		
+		<form action="studentPageWorkExp.jsp" method="post" >
+		
+			<div class="field">
+				<label class="title">Company Name:</label> 
+				<input type="text" name="name" size="28" />
+			</div>
+		
+		
+			<div class="field">
+				<label class="title">Location(Country):</label> 
+				<select name="location">
 						      <option value=""></option> 
 						      <option value="Afghanistan">Afghanistan</option> 
 						      <option value="Albania">Albania</option> 
@@ -417,38 +420,69 @@ td {
 						      <option value="Zambia">Zambia</option> 
 						      <option value="Zimbabwe">Zimbabwe</option>
 				 </select>
-				
-				
-                        
-                        </td>
-                    </tr>
-                    
-                </tbody>
-            </table>
-           
-                     
-  
-           
-       
-       <br> <br>
-           <!--  <button type="reset" class="btn btn-info" name="Reset">Clear</button>  -->
-            <button type = "submit" class="btn btn-info" name="submit"  >Submit</button>
-          <!--  <a href= "createStudentProfile.jsp" class="btn btn-info" name="new">Create Next Account</a>  --> 
-            
-             
-        
-        
-        </form>
-       
-      
-        
+			</div>
+			<div class="field">
+				<label class="title">Position:</label> 
+				<input type="text" name="position" size="28" />
+			</div>
+			
+			<div class="field">
+				<label class="title">Start Date:</label> 
+				<input type="text" name="startDate" size="11"  id="date1"/>
+			</div>
+			<div class="field">
+				<label class="title">End Date:</label> 
+				<input type="text" name="endDate" size="11"  id="date2"/>
+			</div>
+			
+			<div class="submitCert">
+				<button type="submit" class="btn btn-info" name="OK">Submit</button>
+			</div>
+			
+		</form>
+	</fieldset>
+	</div>
+	
+	 <%
+	 	String name = request.getParameter("name");  
+	    String location = request.getParameter("location");
+	    String position=request.getParameter("position");
+	    String startDate = request.getParameter("startDate");
+	    String endDate = request.getParameter("endDate");
+	
+	if( name!=null && location!=null && location!="" && position!=null && startDate!=null && endDate!=null)
+	{
+	    Class.forName("com.mysql.jdbc.Driver");
+		
+	    Connection conn;
+		
+	    conn = DriverManager.getConnection(
+	          "jdbc:mysql://localhost:3306/test_one", "root", "changemaker0123"); // <== Check!
+	    
+	    //System.out.println("Connected...");
+	          
+		
+	   
+	    PreparedStatement ps;
+		String sqlQ = "INSERT INTO work_exp (student_id,company_name,company_location,start_date,end_date,position) "+ 
+					  "VALUES(?,?,?,?,?,?)";
+		
+	    ps = conn.prepareStatement(sqlQ);
+	    ps.setString(1, uid);	
+		ps.setString(2, name);
+		ps.setString(3, location);
+		ps.setString(4, startDate);
+		ps.setString(5, endDate);
+		ps.setString(6, position);
+		
+		ps.executeUpdate();
+		
+		ps.close();
+		conn.close();
+	}	
+	%>
+	
+   
 
-</div>
-</div>
-</div>
-
-
-
-
-</body>
+ </body>
 </html>

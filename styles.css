@@ -1,0 +1,144 @@
+@CHARSET "UTF-8";
+
+body 
+{
+			background-color: moccasin;
+			 background: -webkit-linear-gradient(left top,burlywood, moccasin); 
+			 background-image: image.png;
+			
+}
+
+
+header
+ {
+			color: black;
+				
+} 
+
+header h1
+ {
+			color: black;
+			text-align: center;
+}
+
+div.ex3{
+	    postition: relative;
+	    text-align : center;
+	    left : 70 px;
+}
+
+h1.ex2 {
+	text-align: centre;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 34px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 700;
+	line-height: 26px;
+	
+}
+
+h2.ex2 {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 24px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 15px;
+	text-align: centre;
+}
+
+@-webkit-keyframes scroll
+{
+	0%{
+	      -webkit-transform: translate(0,0);
+	}
+	
+	100% {
+	      -webkit-transform: translate(-100%,0);
+	}
+}
+
+.marquee
+{
+	display:block;
+	width:100%;
+	white-space:nowrap;
+	overflow:hidden;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	font-style: italic;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 15px;
+}
+
+
+.marquee span
+{
+	display:inline-block;
+	padding-left:100%;
+	-webkit-animation: scroll 30s infinite ease-in-out;
+
+}
+
+
+  input[type=search]::-webkit-input-placeholder { /* Safari, Chrome(, Opera?) */
+     color:Teal;
+     font-style:italic;
+     font-style:Bold;
+    }
+    input[type=search]:-moz-placeholder { /* Firefox 18- */
+     color:Teal;
+     font-style:italic;
+      font-style:Bold;
+    }
+    input[type=search]::-moz-placeholder { /* Firefox 19+ */
+     color:Teal;
+     font-style:italic;
+      font-style:Bold;
+    }
+    input[type=search]:-ms-input-placeholder { /* IE (10+?) */
+     color:Teal;
+     font-style:italic;
+      font-style:Bold;
+    }
+
+
+
+div.relative {
+    position: relative;
+    width: 400px;
+    height: 300px;
+   top: 110px;
+   left:0px;
+} 
+
+div.tab
+{
+	color: Black;
+	font-style:Bold;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 30px;
+	
+	
+}
+div.tableM
+{
+	margin-bottom: 80px;
+}
+
+div.topjobs{
+	 position: relative;
+	 font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 14px;
+   top: 200x;
+   left: 70px;
+	
+}
+
+
+rows.gap {
+    border-collapse: separate;
+    border-spacing: 0 1em;
+}

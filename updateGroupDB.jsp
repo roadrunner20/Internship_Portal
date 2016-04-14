@@ -32,17 +32,12 @@ try{
 		Class.forName(driver).newInstance();
 		Connection con=DriverManager.getConnection(DbUrl, userName, pass);
 		
-		String student_id = request.getParameter("studentID");
-		String first_name = request.getParameter("firstName");
-		String middle_name = request.getParameter("middleName");
-		String last_name = request.getParameter("lastName");
-		String email = request.getParameter("emailID");
-		String tel_no = request.getParameter("contactNumber");
-		String semester = request.getParameter("semester");
-		String year = request.getParameter("year");
-		String gender = request.getParameter("Gender");
-		String status = request.getParameter("status");
-		String country = request.getParameter("country");
+		String job_group_id = request.getParameter("jobGroupID");
+		String category_title = request.getParameter("categoryTitle");
+		String pos_id = request.getParameter("jobPositionID");
+		
+		
+		
 	
 		//Class.forName("com.mysql.jdbc.Driver");
 		//Connection con = DriverManager.getConnection("jdbc:mysql://localhost:8080/test_one",  "root", "changemaker");
@@ -50,30 +45,27 @@ try{
 		//out.println("Connection with database made successfully");
 		//ResultSet rs;
 		//rs = st.executeQuery("Select username, password from user where username='" + username + "' and password='" + password + "'");
-		String str = "INSERT INTO student(student_id, first_name, middle_name, last_name, email, tel_no, semester, year, gender, status, country) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+		String str = 
+				"UPDATE job_group SET job_category_title=?, job_position_id=? WHERE job_group_id = ?";
+
+
 		PreparedStatement ps = con.prepareStatement(str);
-		ps.setString(1, student_id);
-		ps.setString(2, first_name );
-		ps.setString(3, middle_name );
-		ps.setString(4, last_name );
-		ps.setString(5, email );
-		ps.setString(6, tel_no );
-		ps.setString(7, semester );
-		ps.setString(8, year);
-		ps.setString(9, gender);
-		ps.setString(10, status);
-		ps.setString(11, country);
+		ps.setString(3, job_group_id);
+		ps.setString(1, category_title );
+		ps.setString(2, pos_id);
+	
 		
 		//ps.executeUpdate();
 		int i = ps.executeUpdate();
 		if(i!=0)
 		{
 			out.print("Records Saved Successfully!");
+			response.sendRedirect("AddJobGroups.jsp");
 
 %>
 			
 <br>		
-<a href= "createStudentProfile.jsp class="btn btn-info" >Create Next Account</a>
+<a href= "addJobGroup.jsp" class="btn btn-info" >Add More Job Groups</a>
 
 <% 	
 			//session.setAttribute("getAlert", "success");

@@ -32,17 +32,16 @@ try{
 		Class.forName(driver).newInstance();
 		Connection con=DriverManager.getConnection(DbUrl, userName, pass);
 		
-		String student_id = request.getParameter("studentID");
-		String first_name = request.getParameter("firstName");
-		String middle_name = request.getParameter("middleName");
-		String last_name = request.getParameter("lastName");
-		String email = request.getParameter("emailID");
-		String tel_no = request.getParameter("contactNumber");
-		String semester = request.getParameter("semester");
-		String year = request.getParameter("year");
-		String gender = request.getParameter("Gender");
-		String status = request.getParameter("status");
-		String country = request.getParameter("country");
+		String job_position_id = request.getParameter("jobpositionID");
+		String job_group_id = request.getParameter("jobGroupID");
+		String pos_title = request.getParameter("jobpositionTitle");
+		String job_desc = request.getParameter("jobDescription");
+		String job_resp = request.getParameter("jobRespons");
+		String job_req = request.getParameter("jobReq");
+	
+		
+		
+		
 	
 		//Class.forName("com.mysql.jdbc.Driver");
 		//Connection con = DriverManager.getConnection("jdbc:mysql://localhost:8080/test_one",  "root", "changemaker");
@@ -50,19 +49,18 @@ try{
 		//out.println("Connection with database made successfully");
 		//ResultSet rs;
 		//rs = st.executeQuery("Select username, password from user where username='" + username + "' and password='" + password + "'");
-		String str = "INSERT INTO student(student_id, first_name, middle_name, last_name, email, tel_no, semester, year, gender, status, country) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+		String str = 
+				"INSERT INTO jobs (job_position_id, job_group_id, job_position_title, job_description, job_responsibilities, job_req) VALUES (?,?,?,?,?,?)";
+
+
 		PreparedStatement ps = con.prepareStatement(str);
-		ps.setString(1, student_id);
-		ps.setString(2, first_name );
-		ps.setString(3, middle_name );
-		ps.setString(4, last_name );
-		ps.setString(5, email );
-		ps.setString(6, tel_no );
-		ps.setString(7, semester );
-		ps.setString(8, year);
-		ps.setString(9, gender);
-		ps.setString(10, status);
-		ps.setString(11, country);
+		ps.setString(1, job_position_id);
+		ps.setString(2, job_group_id);
+		ps.setString(3, pos_title );
+		ps.setString(4, job_desc);
+		ps.setString(5, job_resp);
+		ps.setString(6, job_req);
+	
 		
 		//ps.executeUpdate();
 		int i = ps.executeUpdate();
@@ -73,7 +71,7 @@ try{
 %>
 			
 <br>		
-<a href= "createStudentProfile.jsp class="btn btn-info" >Create Next Account</a>
+<a href= "addJobs.jsp" class="btn btn-info" >Add More Job Positions</a>
 
 <% 	
 			//session.setAttribute("getAlert", "success");

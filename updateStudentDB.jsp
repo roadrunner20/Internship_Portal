@@ -2,27 +2,24 @@
 <head>
 <link rel="stylesheet" href="styles.css" type="text/css">
 </head>
+<script>
+function myFunction() {
+    document.getElementById("demo").innerHTML = "Updated!";
+}
+</script>
 <body>
 
-
+onclick="myFunction()"> Status</p>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ page import ="java.sql.*" %>
  <%@ page import ="javax.sql.*" %>
- <%! String userdbName;
-
-		String userdbPsw;
-		String userdbStatus;
-		String message = "";
-		String name = "";
-		int count = 0;
-		
-%>
+ 
 <%
 
-try{
+
 		//String username= request.getParameter("username");
 		//String password= request.getParameter("password");
 		String userName = "root";
@@ -33,6 +30,7 @@ try{
 		Connection con=DriverManager.getConnection(DbUrl, userName, pass);
 		
 		String student_id = request.getParameter("studentID");
+		
 		String first_name = request.getParameter("firstName");
 		String middle_name = request.getParameter("middleName");
 		String last_name = request.getParameter("lastName");
@@ -42,46 +40,59 @@ try{
 		String year = request.getParameter("year");
 		String gender = request.getParameter("Gender");
 		String status = request.getParameter("status");
-		String country = request.getParameter("country");
-	
+		out.print("Vlaue of student id" + student_id);
+		out.print("Vlaue of first name id" + first_name);
 		//Class.forName("com.mysql.jdbc.Driver");
 		//Connection con = DriverManager.getConnection("jdbc:mysql://localhost:8080/test_one",  "root", "changemaker");
 		//Statement st = con.createStatement();
 		//out.println("Connection with database made successfully");
 		//ResultSet rs;
 		//rs = st.executeQuery("Select username, password from user where username='" + username + "' and password='" + password + "'");
-		String str = "INSERT INTO student(student_id, first_name, middle_name, last_name, email, tel_no, semester, year, gender, status, country) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-		PreparedStatement ps = con.prepareStatement(str);
-		ps.setString(1, student_id);
-		ps.setString(2, first_name );
-		ps.setString(3, middle_name );
-		ps.setString(4, last_name );
-		ps.setString(5, email );
-		ps.setString(6, tel_no );
-		ps.setString(7, semester );
-		ps.setString(8, year);
-		ps.setString(9, gender);
-		ps.setString(10, status);
-		ps.setString(11, country);
+		//String str = "UPDATE student SET first_name= ?, middle_name=?, last_name=?, email=?, tel_no=?, semester=?, year=?, gender=?, status=? WHERE student_id =?";
+		//String str = "UPDATE student SET first_name=?, middle_name = ?, last_name = ?, email=?, tel_no=?, semester=?, year=? WHERE student_id = ?";
+		String str = "UPDATE student SET first_name = ?,middle_name =?, last_name=?, email=?, tel_no =?, semester=?, year=?, gender=?, status=? WHERE student_id = ?";
+	    PreparedStatement ps = con.prepareStatement(str);
 		
-		//ps.executeUpdate();
+		//ps.setString(1, student_id);
+	    ps.setString(1, first_name );
+		ps.setString(2, middle_name );
+		ps.setString(3, last_name );
+		ps.setString(4, email );
+		ps.setString(5, tel_no );
+		ps.setString(6, semester );
+		ps.setString(7, year);
+		ps.setString(8, gender);
+		ps.setString(9, status);
+		ps.setString(10, student_id);
+		out.print("Records ");
+		//ResultSet rs = ps.executeQuery();
 		int i = ps.executeUpdate();
-		if(i!=0)
+		out.print("Value if i" + i);
+		out.print("Vlaue of first name id" + first_name);
+		out.print("Vlaue of first name id" + middle_name);
+		out.print("Vlaue of first name id" + last_name);
+		out.print("Vlaue of first name id" + email);
+		out.print("Vlaue of first name id" + tel_no);
+		out.print("Vlaue of first name id" + semester);
+		out.print("Vlaue of first name id" + year);
+		out.print("Vlaue of first name id" + gender);
+		out.print("Vlaue of first name id" + status);
+	   if(i == 1)
 		{
-			out.print("Records Saved Successfully!");
 
-%>
-			
-<br>		
-<a href= "createStudentProfile.jsp class="btn btn-info" >Create Next Account</a>
-
-<% 	
+			//out.print("Records Saved Successfully!");
 			//session.setAttribute("getAlert", "success");
-			//response.sendRedirect("sucessStudentDB.jsp?studentID="+ student_id); 
-			//request.setAttribute("loginresult", true);
-			//response.sendRedirect("sucessStudentDB.jsp?");
-}
-	
+			
+			 
+ 
+			response.sendRedirect("updateStudentSuccess.jsp"); 
+
+    
+
+
+			
+		}
+		
 		
 		//ResultSet rs = ps.executeQuery();
 		
@@ -89,13 +100,6 @@ try{
  
 	 
 	   ps.close();
-}
-catch(Exception exp)
-{
-	out.print("Error" + exp);
-	//error.setText("Something went wrong");
-
-}
  
 
 	
